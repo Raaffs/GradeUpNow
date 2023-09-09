@@ -1,6 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
-class Theory {
+public class Theory {
     public static String[] Ques_and_keys(int qNum) {
         String[] questions = {
                 "What is a pointer?",
