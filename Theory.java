@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 class Theory {
-    public static String[] quesAndKeys(int qNum) {
+    public static String[] Ques_and_keys(int qNum) {
         String[] questions = {
                 "What is a pointer?",
                 "What are some concepts used in OOP?",
@@ -32,7 +32,7 @@ class Theory {
         return count;
     }
 
-    public static String removeDuplicate(String ans) {
+    public static String Remove_duplicate(String ans) {
         ans = ans.toLowerCase();
         String[] words = ans.split("\\s+");
 
