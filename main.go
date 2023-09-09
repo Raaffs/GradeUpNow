@@ -11,7 +11,8 @@ go mod init github.com/Suy56/GradeUpNow
 go build
 ./GradeUpNow
 
-JAVA SPECIFIC:
+JAVA SPECIFIC: Scanner function may show some error/warning in vscode, ignore it. Do NOT use space/tab while adding
+new keywords in Theory.Ques-and_keys function they might add inaccuracies/errors.  
 
 GENERAL:
 WRITE ANY KEYWORDS YOU WANT TO ADD IN PROGRAM IN LOWER CASE OTHERWISE FUNCITON WILL BREAK
