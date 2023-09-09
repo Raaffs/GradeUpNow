@@ -1,6 +1,7 @@
 package theory
-import(
+import (
 	"strings"
+	//"github.com/agnivade/levenshtein"
 )
 func Ques_keys(q_num int)(string,[]string){
 	question:=map[int]string{
