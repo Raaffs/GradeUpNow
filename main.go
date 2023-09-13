@@ -20,7 +20,6 @@ WRITE ANY KEYWORDS YOU WANT TO ADD IN PROGRAM IN LOWER CASE OTHERWISE FUNCITON W
 Answer given by user is passed into format_ans  to remove any duplicate keywords which may result in inaccuracies.
 Evaulate_ans contains questions and keywords in form of a map(we can replace this with a database later)
 
-First read main() function to get general understanding of how code works, after that goto format_ans and finally to Evaluate_ans
 */
 
 import (
@@ -48,12 +47,22 @@ func main() {
 			scan.Scan()
 			ans := scan.Text()
 
-			f_ans := theory.Remove_duplicate(ans)
-			mat_keys := theory.Evaluate_ans(f_ans, keys)
-			fmt.Println(mat_keys)
+			f_ans := theory.Format_ans(ans)
+			score := theory.Evaluate_ans(f_ans, keys)
+			fmt.Println(score)
 		}
-	case 2:
-		mcq.AskMCQ(1, "How many days does the earth take to revolve around the sun", "360", "300", "365.25", "365", "C")
-	}
+		case 2:
+			var opt int
+			for q_num := 1; q_num <= 2; q_num++{
+			ques,corr_ans:=mcq.Ques_keys(q_num)
+			fmt.Println(ques)
+			fmt.Scanln(&opt)
+			if mcq.Evaluate(opt,corr_ans){
+				fmt.Println("Correct answer!")
+			}else{
+				fmt.Println("Wrong\nAns:", corr_ans)
+			}
+		}
 
+	}
 }

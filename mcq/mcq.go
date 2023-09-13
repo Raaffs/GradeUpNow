@@ -1,26 +1,18 @@
 package mcq
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
+
 )
-func AskMCQ(quesNo int, ques, opt1, opt2, opt3, opt4, correctAns string) {
-    scanner := bufio.NewScanner(os.Stdin)
-
-    println(quesNo, ".", ques+"?")
-    println("A.", opt1)
-    println("B.", opt2)
-    println("C.", opt3)
-    println("D.", opt4)
-    print("Enter Answer [A/B/C/D]: ")
-
-    scanner.Scan()
-    ans := strings.ToUpper(scanner.Text())
-
-    if ans == correctAns {
-        fmt.Println("Correct Answer!")
-    } else {
-        fmt.Println("Incorrect Answer, the correct answer is option", correctAns)
+func Ques_keys(q_num int)(string,int){
+    ques:=map[int]string{
+        1: "What is the function of a pointer?\n1.Store data\n2.Store memory address of another variable\n3.Reference to variable\n4.A special function.",
+        2: "Which of the following is a non linear data structure?\n1.Tree\n2.Array\n3.Linked list\n4.Queue",
     }
+    keys:=map[int]int{
+        1:2,
+        2:1,
+    }
+    return ques[q_num],keys[q_num]
+}
+func Evaluate(opt int, corr_ans int) bool{
+    return opt==corr_ans
 }
