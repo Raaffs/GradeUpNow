@@ -1,8 +1,9 @@
 package theory
 
 import (
-    "strings"
-    "github.com/texttheater/golang-levenshtein/levenshtein"
+	"strings"
+
+	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
 func Ques_keys(q_num int) (string, []string) {
@@ -31,9 +32,7 @@ func Evaluate_ans(ans string, key []string) float64 {
 
         for i, correctKeyword := range key {
             distance := levenshtein.DistanceForStrings([]rune(word), []rune(correctKeyword), levenshtein.DefaultOptions)
-
             threshold := 0.5 * float64(len(correctKeyword))
-
             if float64(distance) <= threshold {
                 count++
                 // Removes matched keyword from the list
