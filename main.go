@@ -50,7 +50,7 @@ func main() {
 
 			f_ans := theory.Format_ans(ans)
 			score := theory.Evaluate_ans(f_ans, keys)
-			fmt.Println("You scored",score,"points on this question")
+			fmt.Println("You scored",score,"points on this question\n")
 		}
 			case 2:
 			var opt int
