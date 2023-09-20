@@ -17,7 +17,7 @@ go ./cmd/web
 
 Format to enter keywords in the database: 
 "word1,word2,word3..."
-DON'T ALL WORDS IN LOWER CASE, SEPARATE THEM WITH ',' AND LEAVE NO WHITE SPACE IN BETWEEN.
+ENTER ALL WORDS IN LOWER CASE, SEPARATE THEM WITH ',' AND LEAVE NO WHITE SPACE IN BETWEEN.
 */
 
 import (
