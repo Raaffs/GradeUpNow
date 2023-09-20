@@ -1,0 +1,49 @@
+search-icon {
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: black;
+    background-color: rgb(218, 180, 131);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: none;
+}
+
+/* box 3 */
+
+.nav-home{
+    width: 60px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.nav-login{
+    width: 60px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.nav-home a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.nav-login a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+
+.homeimg{
+    margin-top: 1rem;
+}
+
+body{
+    background-image: url("bodybg.jpg") ;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
