@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+    <script src="login.js"></script>
+    <div class="contain">
+        <div class="text">
+            <h1>Login</h1>
+            <form action="/login" method="post"> <!-- Added form element with POST method -->
+                <input class="inp" type="text" placeholder="Enter Username" name="username"> <!-- Added name attribute -->
+                <input class="inp" type="password" placeholder="Enter Password" name="password"> <!-- Added name attribute -->
+                <p>Forgot password ?</p>
+                <button type="submit">Login</button> <!-- Added type attribute -->
+            </form>
+            <p>Don't have an id? <span>Sign Up</span></p>
+        </div>
+    </div>
+</body>
+</html>

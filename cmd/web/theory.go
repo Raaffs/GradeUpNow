@@ -1,11 +1,42 @@
-package theory
-
+package main
 import (
     "strings"
+	"regexp"
     "github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
-func Ques_keys(q_num int) (string, []string) {
+
+
+func Format_ans(ans string) string {
+    // Convert the input to lowercase
+    lowerAns := strings.ToLower(ans)
+
+    // Use a regular expression to match and replace symbols with empty strings
+    re := regexp.MustCompile(`[^a-zA-Z0-9\s]`)
+    cleanAns := re.ReplaceAllString(lowerAns, "")
+
+    // Split the cleaned string into words
+    words := strings.Fields(cleanAns)
+
+    // Create a map to store unique words
+    uniqueWords := make(map[string]bool)
+
+    for _, word := range words {
+        uniqueWords[word] = true
+    }
+
+    // Convert unique words back into a string
+    var result string
+    for word := range uniqueWords {
+        result += word + " "
+    }
+
+    // Trim any leading or trailing spaces
+    result = strings.TrimSpace(result)
+
+    return result
+}
+func theory_Ques_keys(q_num int) (string, []string) {
     question := map[int]string{
         1: "What is a pointer?",
         2: "What are some concepts used in OOP?",
