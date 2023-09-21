@@ -89,22 +89,25 @@ func (app *application)get_usr_stats(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintln(w, "username:", user.Username,"Theory:",user.Theory_score,"Mcq:",user.Mcq_score,"Total:",user.Total_score)
 }
 
-func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
+func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
+	leader_board,err:=app.user.Leader_board()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+	for _,usr:=range leader_board{
+		fmt.Fprintf(w,"%v\n",usr)
+	}
+}
+
+/*func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
 	vars:=mux.Vars(r)
-	subject:=vars["subject"]
+//	subject:=vars["subject"]
 	q_type:=vars["type"]
 	if q_type=="mcq"{
-		mcq,err:=app.user.Get_Mcq(1,subject)
-		if err!=nil{
-			if errors.Is(err, models.ErrNoRecord){
-				app.notFound(w)
-			}else{
-				app.serverError(w,err)
-			}
-			return
-		}
-		fmt.Fprintln(w,mcq.MQ_num,mcq.MQ_question)
+		mcq_list,err:=app.user.Get_Mcq(q_type)
+		if err!=nil
 	
 	}
 	
-}
+}*/

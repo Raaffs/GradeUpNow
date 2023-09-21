@@ -16,9 +16,9 @@ func (app *application) routes() *mux.Router {
     mux.HandleFunc("/", app.home)
     mux.HandleFunc("/login", app.login) 
     mux.HandleFunc("/signup", app.sign_up)
+    mux.HandleFunc("/home/leaderboard",app.leader_board)
 	mux.HandleFunc("/home/{username}/stats", app.get_usr_stats)
-
-    mux.HandleFunc("/home/{subject}/{type}", app.q_type_handler)
+  //  mux.HandleFunc("/home/{subject}/{type}", app.q_type_handler)
 
     return mux
 }
