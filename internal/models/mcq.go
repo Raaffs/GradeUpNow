@@ -3,17 +3,25 @@ import (
 	"database/sql"
 	"errors"
 )
+
+//Corresponds to the columns and their datatype in sql database except MQ_opt
 type Mcq struct{
 	MQ_id int
 	MQ_num int
 	MQ_type string
 	MQ_question string
 	MQ_ans int
+	MQ_opt Option
 }
-
-func (theory *Model)Get_Mql(q_num int, q_sub string)(*Mcq,error){
+type Option struct{
+	Opt1 int
+	Opt2 int 
+	Opt3 int
+	Opt4 int
+}
+func (theory *Model)Get_Mcq(q_num int, q_sub string)(*Mcq,error){
 	ques:=&Mcq{}
-	stmt:=`SELECT TQ_num, TQ_question,TQ_keywords
+	stmt:=`SELECT MQ_num, MQ_question,MQ_ans
 	FROM Theory
 	WHERE MQ_qum=? and MQ_type=?`
 	row:=theory.DB.QueryRow(stmt,q_num,q_sub)

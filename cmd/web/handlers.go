@@ -65,7 +65,7 @@ func (app *application)sign_up(w http.ResponseWriter, r *http.Request){
 	username:="Suyash"
 	email:="suyash353@gmail.com"
 	pass:="gtrwm343"
-	_,err:=app.user.SignIn(username,email,pass)
+	_,err:=app.user.SignUp(username,email,pass)
 	if err!=nil{
 		app.serverError(w,err)
 		return
@@ -89,9 +89,22 @@ func (app *application)get_usr_stats(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintln(w, "username:", user.Username,"Theory:",user.Theory_score,"Mcq:",user.Mcq_score,"Total:",user.Total_score)
 }
 
-func (app *application)type_handler(w http.ResponseWriter,r *http.Request){
-	//vars:=mux.Vars(r)
-	//subject:=vars["subject"]
-	//q_type:=vars["type"]
+func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
+	vars:=mux.Vars(r)
+	subject:=vars["subject"]
+	q_type:=vars["type"]
+	if q_type=="mcq"{
+		mcq,err:=app.user.Get_Mcq(1,subject)
+		if err!=nil{
+			if errors.Is(err, models.ErrNoRecord){
+				app.notFound(w)
+			}else{
+				app.serverError(w,err)
+			}
+			return
+		}
+		fmt.Fprintln(w,mcq.MQ_num,mcq.MQ_question)
+	
+	}
 	
 }
