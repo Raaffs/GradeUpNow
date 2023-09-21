@@ -33,7 +33,8 @@ func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
 	
 	for rows.Next(){
 		m:=&Mcq{}
-		err=rows.Scan(m.MQ_id,m.MQ_num,m.MQ_type,m.MQ_question,m.MQ_ans,m.Option1,m.Option2,m.Option3,m.Option4)
+		err=rows.Scan(&m.MQ_id,&m.MQ_num,&m.MQ_type,&m.MQ_question,
+			&m.MQ_ans,&m.Option1,&m.Option2,&m.Option3,&m.Option4)
 		if err!=nil{
 			return nil,err
 		}

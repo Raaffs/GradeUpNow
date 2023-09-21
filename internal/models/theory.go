@@ -1,7 +1,7 @@
 package models
 import (
-	"database/sql"
-	"errors"
+	//"database/sql"
+	//"errors"
 )
 //Corresponds to the columns and their datatype in sql database
 type Theory struct{
@@ -12,19 +12,30 @@ type Theory struct{
 	TQ_keywords string
 }
 
-func (theory *Model)Get_Theory(q_num int, q_sub string)(*Theory,error){
-	ques:=&Theory{}
-	stmt:=`SELECT TQ_num, TQ_question,TQ_keywords
+func (theory *Model)Get_Theory(q_sub string)([]*Theory,error){
+	stmt:=`SELECT *
 	FROM Theory
-	WHERE TQ_qum=? and TQ_type=?`
-	row:=theory.DB.QueryRow(stmt,q_num,q_sub)
-	err:=row.Scan(&ques.TQ_num,&ques.TQ_question,&ques.TQ_keywords)
+	WHERE TQ_type=?
+	ORDER BY TQ_num ASC`
+	rows,err:=theory.DB.Query(stmt,q_sub)
 	if err!=nil{
-		if errors.Is(err, sql.ErrNoRows){
-			return nil, ErrNoRecord
-		}else{
+		return nil,err
+	}
+	defer rows.Close()
+	theory_list:=[]*Theory{}
+	for rows.Next(){
+		t:=&Theory{}
+		err=rows.Scan(
+			t.TQ_id,
+			t.TQ_num,
+			t.TQ_type,
+			t.TQ_question,
+			t.TQ_keywords,
+		)
+		if err!=nil{
 			return nil,err
 		}
+		theory_list=append(theory_list, t)
 	}
-	return ques,nil
+	return theory_list,nil
 }

@@ -1,12 +1,10 @@
 package main
 
 import (
-	//"fmt"
 	"errors"
 	"fmt"
 	"html/template"
 	"net/http"
-
 	"github.com/Suy56/GradeUpNow/internal/models"
 	"github.com/gorilla/mux"
 	//"strconv"
@@ -46,7 +44,7 @@ func (app *application) login(w http.ResponseWriter, r *http.Request) {
         }
 
         // Authentication successful, redirect to home page
-        http.Redirect(w, r, "/", http.StatusSeeOther)
+        http.Redirect(w, r, "/sample", http.StatusSeeOther)
         return
     }
 
@@ -74,6 +72,14 @@ func (app *application) login(w http.ResponseWriter, r *http.Request) {
         app.serverError(w, err)
         return
     }
+}
+func (app *application)sample_home(w http.ResponseWriter, r *http.Request){
+	tmpl,err:=template.ParseFiles("./ui/html/sample.html")
+	if err!=nil{
+		app.serverError(w,err)
+		return
+	}
+	err=tmpl.ExecuteTemplate(w,"sample.html",nil)
 }
 
 func (app *application)home(w http.ResponseWriter, r *http.Request){
@@ -140,14 +146,34 @@ func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-/*func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
+func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
 	vars:=mux.Vars(r)
-//	subject:=vars["subject"]
+	subject:=vars["subject"]
 	q_type:=vars["type"]
-	if q_type=="mcq"{
-		mcq_list,err:=app.user.Get_Mcq(q_type)
-		if err!=nil
-	
+	if subject!="java" && subject!="fse" && subject!="dsa" &&subject!="interview"{
+		fmt.Fprint(w,"Subject not available")
+		return
+	}
+	switch q_type{
+	case "mcq":
+		mcq,err:=app.user.Get_Mcq(subject)
+		if err!=nil{
+			app.serverError(w,err)
+			return
+		}
+		for _,question :=range mcq{
+			fmt.Fprint(w,question.MQ_num,".",question.MQ_question,"\n1.",
+		question.Option1,"\n2.",question.Option2,"\n3.",question.Option3,"\n4.",question.Option4,"\n\n")
+		}
+	case "theory":
+		theory,err:=app.user.Get_Theory(subject)
+		if err!=nil{
+			app.serverError(w,err)
+			return
+		}
+		for _,question:=range theory{
+			fmt.Fprintf(w,"%v",question)
+		}
 	}
 	
-}*/
+}
