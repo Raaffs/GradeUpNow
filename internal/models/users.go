@@ -40,11 +40,11 @@ func (user *Model)SignUp(username string,email_id string,password string)(int,er
 func (user *Model)Get(username string)(*User, error){
 	user_query:=&User{}
 	fmt.Println(username)
-	stmt:=`Select username,total_score,mcq_score,theory_score
+	stmt:=`Select username,total_score,mcq_score,theory_score,password
 	FROM User_profile
 	WHERE username=?`
 	row:=user.DB.QueryRow(stmt,username)
-	err := row.Scan(&user_query.Username,&user_query.Total_score, &user_query.Mcq_score, &user_query.Theory_score)
+	err := row.Scan(&user_query.Username,&user_query.Total_score, &user_query.Mcq_score, &user_query.Theory_score,&user_query.Password)
 	if err!=nil{
 		if errors.Is(err, sql.ErrNoRows){
 			return nil, ErrNoRecord

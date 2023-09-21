@@ -11,31 +11,71 @@ import (
 	"github.com/gorilla/mux"
 	//"strconv"
 )
-func (app *application)login(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-	"./ui/html/login.html",
-	"./ui/html/index.html",
-	}
-	tmpl,err:=template.ParseFiles(files...)
+func (app *application) login(w http.ResponseWriter, r *http.Request) {
+    // Check if it's a POST request
+    if r.Method == http.MethodPost {
+        // Retrieve the username and password from the form
+        username := r.FormValue("username")
+        password := r.FormValue("password")
 
-	if err!=nil{
-		app.serverError(w,err)
-		return
-	}
-	err=tmpl.ExecuteTemplate(w,"login.html",nil)
-	if err!=nil{
-		app.serverError(w,err)
-		return
-	}
-	if r.Method==http.MethodPost{
-		name:=r.FormValue("username")
-		pass:=r.FormValue("password")
-		fmt.Print(name,pass)
-	}
-	
-	http.Redirect(w,r,"/",http.StatusSeeOther)
+        if username == "" || password == "" {
+            // Invalid input, set error message
+            errorMessage := "Username and password cannot be empty."
+            http.Redirect(w, r, "/login?error="+errorMessage, http.StatusSeeOther)
+            return
+        }
 
+        // Check if the username and password exist in the database
+        user, err := app.user.Get(username)
+        if err != nil {
+            if errors.Is(err, models.ErrNoRecord) {
+                errorMessage := "User not found."
+                http.Redirect(w, r, "/login?error="+errorMessage, http.StatusSeeOther)
+                return
+            } else {
+                app.serverError(w, err)
+                return
+            }
+        }
+
+        // Check if the entered password matches the user's password
+        if user.Password != password {
+            errorMessage := "Invalid password."
+            http.Redirect(w, r, "/login?error="+errorMessage, http.StatusSeeOther)
+            return
+        }
+
+        // Authentication successful, redirect to home page
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    // Render the login form
+    files := []string{
+        "./ui/html/login.html",
+        "./ui/html/index.html",
+    }
+    tmpl, err := template.ParseFiles(files...)
+    if err != nil {
+        app.serverError(w, err)
+        return
+    }
+
+    // Get the error message from the query parameter (if any)
+    errorMessage := r.URL.Query().Get("error")
+    data := struct {
+        ErrorMessage string
+    }{
+        ErrorMessage: errorMessage,
+    }
+
+    err = tmpl.ExecuteTemplate(w, "login.html", data)
+    if err != nil {
+        app.serverError(w, err)
+        return
+    }
 }
+
 func (app *application)home(w http.ResponseWriter, r *http.Request){
 	files := []string{
 		"./ui/html/index.html",

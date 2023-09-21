@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/static/css/login.css">
+    <style>
+        /* Add a style for error messages */
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <script src="login.js"></script>
     <div class="contain">
         <div class="text">
             <h1>Login</h1>
-            <form action="/login" method="post"> <!-- Added form element with POST method -->
-                <input class="inp" type="text" placeholder="Enter Username" name="username"> <!-- Added name attribute -->
-                <input class="inp" type="password" placeholder="Enter Password" name="password"> <!-- Added name attribute -->
+            <!-- Add a div for displaying error messages -->
+            <div class="error-message">{{.ErrorMessage}}</div>
+            <form action="/login" method="post">
+                <input class="inp" type="text" placeholder="Enter Username" name="username">
+                <input class="inp" type="password" placeholder="Enter Password" name="password">
                 <p>Forgot password ?</p>
-                <button type="submit">Login</button> <!-- Added type attribute -->
+                <button type="submit">Login</button>
             </form>
             <p>Don't have an id? <span>Sign Up</span></p>
         </div>
