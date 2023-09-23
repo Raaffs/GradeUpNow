@@ -14,18 +14,28 @@
 </head>
 <body>
     <script src="login.js"></script>
-    <div class="contain">
-        <div class="text">
-            <h1>Login</h1>
-            <!-- Add a div for displaying error messages -->
-            <div class="error-message">{{.ErrorMessage}}</div>
-            <form action="/login" method="post">
-                <input class="inp" type="text" placeholder="Enter Username" name="username">
-                <input class="inp" type="password" placeholder="Enter Password" name="password">
-                <p>Forgot password ?</p>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an id? <span>Sign Up</span></p>
+    <div class="container">
+        <div class="left-content">
+            <div class="header-text">Welcome to GradeUpNow</div>
+            <p class="description">
+                The system will focus on helping students revise important concepts and test them by asking them questions on the selected topic. The students will be awarded points according to their answers and a performance summary will then be generated using which students can then evaluate their performance to know their weaknesses and strengths.
+            </p>
+        </div>
+        <div class="right-content">
+            <div class="contain">
+                <div class="text">
+                    <h1>Login</h1>
+                    <!-- Add a div for displaying error messages -->
+                    <div class="error-message">{{.ErrorMessage}}</div>
+                    <form action="/login" method="post">
+                        <input class="inp" type="text" placeholder="Enter Username" name="username">
+                        <input class="inp" type="password" placeholder="Enter Password" name="password">
+                        <p>Forgot password ?</p>
+                        <button type="submit">Login</button>
+                    </form>
+                    <p>Don't have an id? <a href="/signup">Sign Up</a></p>
+                </div>
+            </div>
         </div>
     </div>
 </body>

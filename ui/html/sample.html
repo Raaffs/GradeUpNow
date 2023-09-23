@@ -4,30 +4,7 @@
     <!-- Add your CSS stylesheets here -->
 </head>
 <body>
-    <div>
-        <form id="mcq-form" action="/home/java/mcq" method="POST">
-            {{ range $index, $question := .Questions }}
-                {{ if $index }}<hr>{{ end }}
-                <p>{{ $question.MQ_question }}</p>
-                <label>
-                    <input type="radio" name="answer" value="1">
-                    {{ $question.Option1 }}
-                </label><br>
-                <label>
-                    <input type="radio" name="answer" value="2">
-                    {{ $question.Option2 }}
-                </label><br>
-                <label>
-                    <input type="radio" name="answer" value="3">
-                    {{ $question.Option3 }}
-                </label><br>
-                <label>
-                    <input type="radio" name="answer" value="4">
-                    {{ $question.Option4 }}
-                </label><br>
-            {{ end }}
-            <input type="submit" value="Next">
-        </form>
+    <h1>sample home page</h1>
     </div>
 </body>
 </html>

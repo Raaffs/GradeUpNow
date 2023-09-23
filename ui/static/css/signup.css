@@ -1,0 +1,120 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("bg1.jpg");
+    background-size: 100% 750px;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Make sure the body covers the entire viewport height */
+}
+
+.container {
+    display: flex;
+    background-color: rgba(20, 23, 22, 0.98);
+    border: 3px solid rgba(20, 23, 22);
+    border-radius: 8px;
+    width: 80%; /* Take up 80% of the screen width */
+    padding: 20px;
+    color: white;
+}
+
+.left-content {
+    flex: 1; /* Take up the entire left side */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+.right-content {
+    flex: 1; /* Take up the entire right side */
+    text-align: center; /* Center content horizontally within the right side */
+}
+
+/* Styles for the Welcome part */
+.header-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: aqua;
+}
+
+.description {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Your existing CSS styles for the login part can be retained below this point */
+.contain {
+    width: 340px;
+    height: 440px;
+    text-align: center;
+    background-color: black;
+    margin-left: 41%;
+    margin-top: 7%;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    background-color: rgba(20,23,22);
+    border: 3px solid rgba(20,23,22);
+}
+
+.contain.text {
+    position: relative;
+    top: 7%;
+}
+
+.contain h1 {
+    margin-top: 20px;
+    font-size: 36px;
+    color: aqua;
+}
+
+.inp {
+    border: none;
+    background-color: rgba(20,23,22,0.98);
+    border-bottom: 3px solid white;
+    width: 250px;
+    font-size: 20px;
+    margin-top: 20px;
+    outline: none;
+    color: white;
+}
+
+.text button {
+    width: 250px;
+    height: 45px;
+    background-color: aqua;
+    color: black;
+    border: none;
+    font-size: 22px;
+    border-radius: 25px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    border: 3px solid aqua;
+    color: white;
+    font-size: 20px;
+    background-color: black;
+}
+
+p {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+p a {
+    color: aqua;
+    cursor: pointer;
+}

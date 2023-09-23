@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/css/signup.css">
+    <style>
+        /* Add a style for error messages */
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <script src="signup.js"></script>
+    <div class="container">
+        <div class="left-content">
+            <div class="header-text">Welcome to GradeUpNow</div>
+            <p class="description">
+                The system will focus on helping students revise important concepts and test them by asking them questions on the selected topic. The students will be awarded points according to their answers, and a performance summary will then be generated using which students can evaluate their performance to know their weaknesses and strengths.
+            </p>
+        </div>
+        <div class="right-content">
+            <div class="contain">
+                <div class="text">
+                    <h1>Sign Up</h1>
+                    <!-- Add a div for displaying error messages -->
+                    <div class="error-message">{{.ErrorMessage}}</div>
+                    <form action="/signup" method="post">
+                        <input class="inp" type="text" placeholder="Enter Email" name="email">
+                        <input class="inp" type="text" placeholder="Enter  username" name="username">
+                        <input class="inp" type="password" placeholder="Create Password" name="password">
+                        <button type="submit">Sign Up</button>
+                    </form>
+                    <p>Already have an account? <a href="/login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

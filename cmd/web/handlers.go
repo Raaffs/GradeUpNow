@@ -15,7 +15,6 @@ func (app *application) login(w http.ResponseWriter, r *http.Request) {
         // Retrieve the username and password from the form
         username := r.FormValue("username")
         password := r.FormValue("password")
-
         if username == "" || password == "" {
             // Invalid input, set error message
             errorMessage := "Username and password cannot be empty."
@@ -102,20 +101,79 @@ func (app *application)home(w http.ResponseWriter, r *http.Request){
 	}
 	
 }
-func (app *application)sign_up(w http.ResponseWriter, r *http.Request){
-	if r.Method != http.MethodPost {
-		w.Header().Set("Allow", http.MethodPost)
-		app.clientError(w, http.StatusMethodNotAllowed) // Use the clientError() helper.
-		return
-	}
-	username:="Suyash"
-	email:="suyash353@gmail.com"
-	pass:="gtrwm343"
-	_,err:=app.user.SignUp(username,email,pass)
-	if err!=nil{
-		app.serverError(w,err)
-		return
-	}
+func (app *application) sign_up(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodPost {
+        // Retrieve form values
+        email := r.FormValue("email")
+        username := r.FormValue("username")
+        pass := r.FormValue("password")
+
+        if email == "" || username == "" || pass == "" {
+            errorMessage := "Email, display name, and password cannot be empty."
+            http.Redirect(w, r, "/signup?error="+errorMessage, http.StatusSeeOther)
+            return
+        }
+
+        // Check if username already exists
+        usernameExists, err := app.user.Check_if_exist(username, "")
+        if err != nil {
+            app.serverError(w, err)
+            return
+        }
+        if usernameExists {
+            errorMessage := "Username already exists."
+            http.Redirect(w, r, "/signup?error="+errorMessage, http.StatusSeeOther)
+            return
+        }
+
+        // Check if email already exists
+        emailExists, err := app.user.Check_if_exist("", email)
+        if err != nil {
+            app.serverError(w, err)
+            return
+        }
+        if emailExists {
+            errorMessage := "Email already exists."
+            http.Redirect(w, r, "/signup?error="+errorMessage, http.StatusSeeOther)
+            return
+        }
+
+        // Proceed with user registration
+        _, err = app.user.SignUp(username, email, pass)
+        if err != nil {
+            app.serverError(w, err)
+            return
+        }
+
+        // Redirect to the login page after successful signup
+        http.Redirect(w, r, "/login", http.StatusSeeOther)
+        return
+    }
+
+    // Render the signup form for GET requests
+    files := []string{
+        "./ui/html/signup.html",
+        "./ui/html/index.html",
+    }
+    tmpl, err := template.ParseFiles(files...)
+    if err != nil {
+        app.serverError(w, err)
+        return
+    }
+
+    // Get the error message from the query parameter (if any)
+    errorMessage := r.URL.Query().Get("error")
+    data := struct {
+        ErrorMessage string
+    }{
+        ErrorMessage: errorMessage,
+    }
+
+    err = tmpl.ExecuteTemplate(w, "signup.html", data)
+    if err != nil {
+        app.serverError(w, err)
+        return
+    }
 }
 
 func (app *application)get_usr_stats(w http.ResponseWriter, r *http.Request){
