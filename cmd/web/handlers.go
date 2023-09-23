@@ -190,7 +190,8 @@ func (app *application)get_usr_stats(w http.ResponseWriter, r *http.Request){
 		}
 		return
 	}
-	fmt.Fprintln(w, "username:", user.Username,"Theory:",user.Theory_score,"Mcq:",user.Mcq_score,"Total:",user.Total_score)
+    fmt.Println(user.Theory_score)
+	fmt.Fprintln(w, "username:", user.Username,"Theory:",user.Theory_score,"Mcq:",user.Mcq_score,"Total:",user.Total_score,"DBMS:",user.DBMS_score)
 }
 
 func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
@@ -208,21 +209,25 @@ func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
 	vars:=mux.Vars(r)
 	subject:=vars["subject"]
 	q_type:=vars["type"]
-	if subject!="java" && subject!="fse" && subject!="dsa" &&subject!="interview"{
+	if subject!="java" && subject!="fse" && subject!="dsa" &&subject!="dbms"{
 		fmt.Fprint(w,"Subject not available")
 		return
 	}
 	switch q_type{
 	case "mcq":
-		mcq,err:=app.user.Get_Mcq(subject)
-		if err!=nil{
-			app.serverError(w,err)
-			return
-		}
-		for _,question :=range mcq{
-			fmt.Fprint(w,question.MQ_num,".",question.MQ_question,"\n1.",
-		question.Option1,"\n2.",question.Option2,"\n3.",question.Option3,"\n4.",question.Option4,"\n\n")
-		}
+        total_scr,err:=app.user.Get("suyash")
+        if err!=nil{
+            app.serverError(w,err)
+            app.errorLog.Fatal(err)
+        }
+		crnt_scr:=10
+        crnt_scr+=total_scr.DBMS_score
+        err=app.user.Update_score("dbms",crnt_scr)
+        if err!=nil{
+            app.serverError(w,err)
+            app.errorLog.Fatal(err)
+        }
+        fmt.Print("Testing after calling update score")
 	case "theory":
 		theory,err:=app.user.Get_Theory(subject)
 		if err!=nil{

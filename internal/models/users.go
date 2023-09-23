@@ -22,7 +22,6 @@ type User struct{
     DBMS_score  int
     DSA_score   int
     FSE_score   int
-	userModel *Model
 }
 //inserts a new user in database and initializes the score to 0
 func (user *Model)SignUp(username string,email_id string,password string)(int,error){
@@ -55,14 +54,19 @@ func (user *Model)Check_if_exist(username string,email_id string)(bool,error){
 }
 
 func (user *Model)Get(username string)(*User, error){
+	fmt.Println("testing")
+
 	user_query:=&User{}
-	fmt.Println(username)
 	g_CurrentUserSession=username
-	stmt:=`Select *
+	stmt:=`SELECT username,email_id,total_score,mcq_score,theory_score,Java_score,DBMS_score,DSA_score,FSE_score
 	FROM User_profile
 	WHERE username=?`
+	fmt.Println("testing after stmt")
+
 	row:=user.DB.QueryRow(stmt,username)
-	err := row.Scan(&user_query.User_id,user_query.Email_id,user_query.Username,user_query.Password,user_query.Total_score,user_query.Mcq_score,user_query.Theory_score,user_query.DBMS_score,user_query.DSA_score,user_query.FSE_score,user_query.Java_score)
+	fmt.Println("testing after row")
+
+	err := row.Scan(&user_query.Username,&user_query.Email_id,&user_query.Total_score,&user_query.Mcq_score,&user_query.Theory_score,&user_query.Java_score,&user_query.DBMS_score,&user_query.DSA_score,&user_query.FSE_score)
 	if err!=nil{
 		if errors.Is(err, sql.ErrNoRows){
 			return nil, ErrNoRecord
@@ -70,6 +74,8 @@ func (user *Model)Get(username string)(*User, error){
 			return nil,err
 		}
 	}
+	fmt.Println("testing after err")
+
 	return user_query,nil
 }
 
@@ -104,29 +110,45 @@ func(user *Model)Leader_board()([] *User,error){
 	return leaderboard,nil
 }
 
-func (user *User) Update_score(subject string, score int) error {
+func (user *Model) Update_score(subject string, score int) error {
+	fmt.Println("in update score")
+	usr_scr:=&User{}
     switch subject {
-    case "Java_score":
-        user.Java_score = score
-    case "DBMS_score":
-        user.DBMS_score = score
-    case "DSA_score":
+    case "java":
+        usr_scr.Java_score = score
+		stmt := `UPDATE User_profile 
+		SET Java_score=? 
+		WHERE username=?`
+    	_, err := user.DB.Exec(stmt, usr_scr.Java_score,"suyash")
+   		if err != nil {
+       	 	return err
+    	}
+    case "dbms":
+        usr_scr.DBMS_score = score
+		fmt.Println("score in dbms",score)
+		stmt := `UPDATE User_profile 
+		SET DBMS_score=? 
+		WHERE username=?`
+    	_, err := user.DB.Exec(stmt, usr_scr.DBMS_score,"suyash")
+		fmt.Println("printling score after updating score", score)
+
+   		if err != nil {
+       	 	return err
+    	}
+  /*  case "DSA_score":
         user.DSA_score = score
     case "FSE_score":
         user.FSE_score = score
     default:
         return errors.New("Invalid subject")
-    }
+    }*/
 
     // Update the total score by summing all subject scores
-    user.Total_score = user.Java_score + user.DBMS_score + user.DSA_score + user.FSE_score
+  //  user.Total_score = user.Java_score + user.DBMS_score + user.DSA_score + user.FSE_score
 
     // Update the scores in the database using userModel
-    stmt := "UPDATE User_profile SET Java_score=?, DBMS_score=?, DSA_score=?, FSE_score=?, Total_score=? WHERE Username=?"
-    _, err := user.userModel.DB.Exec(stmt, user.Java_score, user.DBMS_score, user.DSA_score, user.FSE_score, user.Total_score, user.Username)
-    if err != nil {
-        return err
-    }
+	}
+    
 
     return nil
 }
