@@ -19,7 +19,7 @@ type Mcq struct{
 
 func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
 	//ques:=&Mcq{}
-	stmt:=`SELECT *
+	stmt:=`SELECT MQ_question, Option1, Option2, Option3, Option4, MQ_ans
 	FROM Mcq
 	WHERE MQ_type=?
 	ORDER BY MQ_num ASC`
@@ -33,8 +33,7 @@ func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
 	
 	for rows.Next(){
 		m:=&Mcq{}
-		err=rows.Scan(&m.MQ_id,&m.MQ_num,&m.MQ_type,&m.MQ_question,
-			&m.MQ_ans,&m.Option1,&m.Option2,&m.Option3,&m.Option4)
+		err=rows.Scan(&m.MQ_question, &m.Option1, &m.Option2, &m.Option3, &m.Option4, &m.MQ_ans)
 		if err!=nil{
 			return nil,err
 		}

@@ -177,3 +177,4 @@ func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
 	}
 	
 }
+

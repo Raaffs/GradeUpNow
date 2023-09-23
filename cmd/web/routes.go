@@ -20,6 +20,5 @@ func (app *application) routes() *mux.Router {
     mux.HandleFunc("/home/leaderboard",app.leader_board)
 	mux.HandleFunc("/home/{username}/stats", app.get_usr_stats)
     mux.HandleFunc("/home/{subject}/{type}", app.q_type_handler)
-
     return mux
 }
