@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/home/profile">Profile</a></li>
+            <li><a href="/home/leaderboard">Leaderboard</a></li>
+            <li><a href="/home/about">About</a></li>
+            <li><a href="/login">Logout</a>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="left-content">
+            <h1 class="header-text">Leaderboard</h1>
+            <table class="leaderboard-table">
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Total Score</th>
+                </tr>
+                {{ range $index, $user := .LeaderBoard }}
+                <tr>
+                    <td>{{ add $index 1 }}</td>
+                    <td>{{ $user.Username }}</td>
+                    <td>{{ $user.Total_score}}</td>
+                </tr>
+                {{ end }}
+            </table>
+        </div>
+        <div class="right-content">
+            <a href="type.html" class="box">Foundational of Software Engineering</a>
+            <a href="type.html" class="box dbms">Database Management</a>
+            <a href="type.html" class="box dsa">Data Structure</a>
+            <a href="type.html" class="box java">JAVA</a>
+        </div>
+    </div>
+</body>
+</html>

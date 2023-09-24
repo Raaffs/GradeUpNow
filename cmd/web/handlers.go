@@ -9,12 +9,20 @@ import (
 	"github.com/gorilla/mux"
 	//"strconv"
 )
+func(app *application)root_hander(w http.ResponseWriter, r*http.Request){
+    http.Redirect(w,r,"/login",http.StatusSeeOther)
+}
 func (app *application) login(w http.ResponseWriter, r *http.Request) {
+    if r.URL.Path != "/login" {
+    	app.notFound(w)
+		return
+	}
     // Check if it's a POST request
     if r.Method == http.MethodPost {
         // Retrieve the username and password from the form
         username := r.FormValue("username")
         password := r.FormValue("password")
+        models.G_CurrentUserSession=username
         if username == "" || password == "" {
             // Invalid input, set error message
             errorMessage := "Username and password cannot be empty."
@@ -43,7 +51,7 @@ func (app *application) login(w http.ResponseWriter, r *http.Request) {
         }
 
         // Authentication successful, redirect to home page
-        http.Redirect(w, r, "/sample", http.StatusSeeOther)
+        http.Redirect(w, r, "/home", http.StatusSeeOther)
         return
     }
 
@@ -71,32 +79,36 @@ func (app *application) login(w http.ResponseWriter, r *http.Request) {
         app.serverError(w, err)
         return
     }
-}
-func (app *application)sample_home(w http.ResponseWriter, r *http.Request){
-	tmpl,err:=template.ParseFiles("./ui/html/sample.html")
-	if err!=nil{
-		app.serverError(w,err)
-		return
-	}
-	err=tmpl.ExecuteTemplate(w,"sample.html",nil)
+
 }
 
 func (app *application)home(w http.ResponseWriter, r *http.Request){
+    leaderboard,err:=app.user.Leader_board()
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print(err)
+    }
+    top_five:=leaderboard[:5]
+
+    funcMap := template.FuncMap{
+        "add": add,
+    }
+
+    data:=struct{
+        LeaderBoard [] *models.User
+    }{
+        LeaderBoard: top_five,
+    }
 	files := []string{
-		"./ui/html/index.html",
-		"./ui/html/login.html",
+		"./ui/html/home.html",
 	}
-	if r.URL.Path != "/" {
-		app.notFound(w)
-		return
-	}
-	tmpl,err:=template.ParseFiles(files...)
+    tmpl, err := template.New("home.html").Funcs(funcMap).ParseFiles(files...)
+    if err != nil {
+        app.notFound(w)
+    }	
+	err=tmpl.ExecuteTemplate(w,"home.html",data)
 	if err!=nil{
-		app.notFound(w)
-	}
-	
-	err=tmpl.ExecuteTemplate(w,"index.html",nil)
-	if err!=nil{
+        app.errorLog.Print(err)
 		app.serverError(w,err)
 	}
 	
@@ -176,33 +188,86 @@ func (app *application) sign_up(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func (app *application)get_usr_stats(w http.ResponseWriter, r *http.Request){
+func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
 	vars:=mux.Vars(r)
 	username:=vars["username"]
-	fmt.Print(username)
-	fmt.Println(username)
-	user,err:=app.user.Get(username)
-	if err!=nil{
-		if errors.Is(err, models.ErrNoRecord){
-			app.notFound(w)
-		}else{
-			app.serverError(w,err)
-		}
-		return
-	}
-    fmt.Println(user.Theory_score)
-	fmt.Fprintln(w, "username:", user.Username,"Theory:",user.Theory_score,"Mcq:",user.Mcq_score,"Total:",user.Total_score,"DBMS:",user.DBMS_score)
+    data:=&template_data{}
+    if username!=""{
+        usr,err:=app.user.Get(username)
+        fmt.Print("printing after get(usernmae)")
+        data.Individual_user_data=usr
+
+        if err!=nil{
+            app.notFound(w)
+            app.errorLog.Fatal(err)
+        }
+        tmpl,err:=template.ParseFiles("./ui/html/profile.html")
+        if err!=nil{            
+
+            app.serverError(w,err)
+            app.errorLog.Fatal(err)
+            
+        }
+        err=tmpl.ExecuteTemplate(w,"profile.html",data)
+        if err!=nil{
+            app.serverError(w,err)
+            app.errorLog.Fatal(err)
+        }
+        fmt.Print(usr.DBMS_score)
+    }
+    
+    
+    if r.URL.Path=="/home/profile"{
+        fmt.Println("hello")
+        fmt.Print(models.G_CurrentUserSession)
+       usr,err :=app.user.Get(models.G_CurrentUserSession)
+       
+       
+        if err!=nil{
+        app.notFound(w)
+        app.errorLog.Println(err)
+       }
+       tmpl,err:=template.ParseFiles("./ui/html/profile.html")
+       if err!=nil{
+           app.serverError(w,err)
+           app.errorLog.Print(err)
+       }
+       err=tmpl.ExecuteTemplate(w,"profile.html",data)
+       fmt.Print(usr.DBMS_score)
+
+       fmt.Print(usr.Total_score)
+    }
+
 }
 
 func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
-	leader_board,err:=app.user.Leader_board()
-	if err != nil {
-		app.serverError(w, err)
-		return
+    leaderboard,err:=app.user.Leader_board()
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print(err)
+    }
+    funcMap := template.FuncMap{
+        "add": add,
+    }
+
+    data:=struct{
+        LeaderBoard [] *models.User
+    }{
+        LeaderBoard: leaderboard,
+    }
+	files := []string{
+		"./ui/html/leaderboard.html",
 	}
-	for _,usr:=range leader_board{
-		fmt.Fprintf(w,"%v\n",usr)
+    tmpl, err := template.New("leaderboard.html").Funcs(funcMap).ParseFiles(files...)
+    if err != nil {
+        app.notFound(w)
+    }	
+	err=tmpl.ExecuteTemplate(w,"leaderboard.html",data)
+	if err!=nil{
+        app.errorLog.Print(err)
+		app.serverError(w,err)
 	}
+
 }
 
 func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
@@ -215,7 +280,7 @@ func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
 	}
 	switch q_type{
 	case "mcq":
-        total_scr,err:=app.user.Get("suyash")
+        total_scr,err:=app.user.Get(models.G_CurrentUserSession)
         if err!=nil{
             app.serverError(w,err)
             app.errorLog.Fatal(err)
@@ -225,12 +290,13 @@ func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
         err=app.user.Update_score("dbms",crnt_scr)
         if err!=nil{
             app.serverError(w,err)
-            app.errorLog.Fatal(err)
+            app.errorLog.Println(err)
         }
         fmt.Print("Testing after calling update score")
 	case "theory":
 		theory,err:=app.user.Get_Theory(subject)
 		if err!=nil{
+
 			app.serverError(w,err)
 			return
 		}

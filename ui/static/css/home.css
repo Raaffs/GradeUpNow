@@ -1,0 +1,160 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(27, 26, 26, 0.973);
+    background-size: 200% 1080px;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200vh;
+    margin: 0; /* Remove margin to prevent spacing at the top */
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.808);
+    padding: 10px 0;
+    text-align: right;
+    width: 100%; /* Make the navbar full-width */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.navbar ul {
+    list-style-type: none;
+    display: flex; /* Display navigation items horizontally */
+    justify-content: center; /* Center the navigation items horizontally */
+    align-items: center;
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+
+}
+.nav-menu li {
+    font-size: 18px;
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #ff7300;
+    transition: color 0.3s;
+}
+.nav-menu a:hover {
+    color: #ff6600;
+}
+
+
+.container {
+    display: flex;
+    background-color: rgba(20, 23, 22, 0.98);
+    border: 3px solid rgba(20, 23, 22);
+    border-radius: 8px;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top: 0px;
+}
+
+.left-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-content {
+    text-align: center;
+}
+
+.header-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: aqua;
+}
+
+.leaderboard-table {
+    width: 80%;
+    margin-top: 20px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.leaderboard-table th {
+    background-color: aqua;
+    color: black;
+}
+
+.leaderboard-table tr:nth-child(even) {
+    background-color: rgba(20, 23, 22, 0.8);
+}
+
+.leaderboard-table tr:nth-child(odd) {
+    background-color: rgba(20, 23, 22, 0.6);
+}
+
+.box {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    color: white;
+}
+
+.box.dbms {
+    background-color: #FF0000; /* Red color */
+}
+
+.box.dsa {
+    background-color: #800080; /* Purple color */
+}
+
+.box.java {
+    background-color: #00FF00; /* Green color */
+}
+
+.box.fse {
+    background-color: rgb(0, 35, 110);
+}
+
+.box:hover {
+    background-color: aqua;
+    color: black;
+}

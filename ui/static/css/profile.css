@@ -1,0 +1,123 @@
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(27, 26, 26, 0.973);
+    background-size: 200% 1080px;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0; /* Remove margin to prevent spacing at the top */
+}
+
+.navbar {
+    background-color: rgba(20, 23, 22, 0.98);
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex; /* Display navigation items horizontally */
+    justify-content: center; /* Center the navigation items horizontally */
+    align-items: center; /* Center vertically within the navbar */
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu li {
+    font-size: 18px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #ff6600;
+}
+
+.container {
+    margin-top: 70px; /* Add top margin to create space below the fixed navbar */
+    display: flex;
+    background-color: rgba(20, 23, 22, 0.98);
+    border: 3px solid rgba(20, 23, 22);
+    border-radius: 8px;
+    width: 80%;
+    padding: 20px;
+    color: white;
+    flex-direction: column;
+}
+
+/* Add your profile page styles here */
+
+.user-info, .user-stats {
+    margin-top: 20px;
+}
+
+.user-info h2, .user-stats h2 {
+    font-size: 24px;
+    color: aqua;
+}
+
+.user-info p, .user-stats table {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.user-stats table {
+    width: 100%;
+}
+
+.user-stats table td {
+    padding: 10px;
+    border: 1px solid white;
+    text-align: left;
+}
+
+.user-stats table td:first-child {
+    font-weight: bold;
+    width: 40%;
+}
+
+.user-stats table td:last-child {
+    font-weight: normal;
+    width: 60%;
+}
+
+/* Add your additional profile page styles below this line */

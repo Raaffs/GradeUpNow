@@ -37,6 +37,13 @@ type application struct{
 	infoLog *log.Logger
 	user *models.Model
 }
+type template_data struct{
+	User_data []*models.User
+	Individual_user_data *models.User
+	Theory_data models.Theory
+	Mcq_data models.Mcq
+	Model_data models.Model
+}
 func openDB(dsn string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navlogo">
+                    <!-- <div class="logo"></div> -->
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/home/profile">Profile</a></li>
+                    <li><a href="/home/leaderboard">Leaderboard</a></li>
+                    <li><a href="/home/about">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>User Profile</h1>
+        <div class="user-info">
+            <h2>Personal Information</h2>
+            <div class="username">
+                <p><strong>Username:</strong> {{ .Individual_user_data.Username}}</p>
+            </div>
+            <div class="email">
+                <p><strong>Email:</strong> {{ .Individual_user_data.Email_id}}</p>
+            </div>
+            <!-- Add more user data fields as needed -->
+        </div>
+        <div class="user-stats">
+            <h2>Stats</h2>
+            <table>
+                <tr>
+                    <td><strong>Overall Score:</strong></td>
+                    <td>{{ .Individual_user_data.Total_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>MCQ Score:</strong></td>
+                    <td>{{ .Individual_user_data.Mcq_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Theory Score:</strong></td>
+                    <td>{{ .Individual_user_data.Theory_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Java Score:</strong></td>
+                    <td>{{ .Individual_user_data.Java_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>FSE Score:</strong></td>
+                    <td>{{ .Individual_user_data.FSE_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>DSA Score:</strong></td>
+                    <td>{{ .Individual_user_data.DSA_score}}</td>
+                </tr>
+                <tr>
+                    <td><strong>DBMS Score:</strong></td>
+                    <td>{{ .Individual_user_data.DBMS_score}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
