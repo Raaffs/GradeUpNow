@@ -15,6 +15,8 @@ type Mcq struct{
 	Option2     string
 	Option3     string
 	Option4     string
+	Options		[]string
+	UserChoice int
 }
 
 func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
@@ -37,6 +39,7 @@ func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
 		if err!=nil{
 			return nil,err
 		}
+		m.Options=[]string{m.Option1,m.Option2,m.Option3,m.Option4}
 		mcq_list=append(mcq_list, m)
 	}
 	return mcq_list,nil

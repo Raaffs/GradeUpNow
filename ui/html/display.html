@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Options</title>
+    <link rel="stylesheet" href="/static/css/display.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul class="nav-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/home/profile">Profile</a></li>
+            <li><a href="/home/leaderboard">Leaderboard</a></li>
+            <li><a href="/home/about">About</a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="practice-options">
+        <h1>Select Practice Type</h1>
+        <div class="option-box mcq-box">
+            <a href="/home/{{.Subject}}/mcq">Practice MCQ</a>
+        </div>
+        <div class="option-box theory-box">
+            <a href="/home/{{.Subject}}/theory">Practice Theory</a>
+        </div>
+    </div>
+</body>
+</html>

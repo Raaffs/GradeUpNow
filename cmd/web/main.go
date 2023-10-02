@@ -32,13 +32,16 @@ import (
 	// "github.com/Suy56/GradeUpNow/internal/models"
 )
 
+
+// This struct to make errors more readable and also to access acts as a wrapper around database/sql package. 
 type application struct{
 	errorLog *log.Logger
 	infoLog *log.Logger
 	user *models.Model
 }
+//To enter dynamic data into html
 type template_data struct{
-	User_data []*models.User
+	User_data []*models.User		
 	Individual_user_data *models.User
 	Theory_data models.Theory
 	Mcq_data models.Mcq

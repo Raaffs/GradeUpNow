@@ -1,0 +1,104 @@
+/* Your existing styles for body and navbar */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.808);
+    padding: 0px 0;
+    text-align: right;
+    width: 100%; /* Make the navbar full-width */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.navbar ul {
+    list-style-type: none;
+    display: flex; /* Display navigation items horizontally */
+    justify-content: center; /* Center the navigation items horizontally */
+    align-items: center;
+}
+
+.navbar ul li {
+    margin-right: 15px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+
+}
+.nav-menu li {
+    font-size: 18px;
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #ff7300;
+    transition: color 0.3s;
+}
+.nav-menu a:hover {
+    color: #ff6600;
+}
+
+/* Your existing navbar styles */
+
+body {
+    background-color: rgba(20, 23, 22); /* Set the background color to black for the entire page */
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200vh;
+    margin: 0;
+}
+
+.practice-options {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.practice-options h1 {
+    font-size: 36px;
+    color: white;
+}
+
+.option-box {
+    width: 200px;
+    height: 150px;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 20px auto;
+}
+
+.option-box a {
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.option-box a:hover {
+    color: rgb(241, 98, 15);
+}
+
+.mcq-box {
+    background-color: aqua;
+}
+
+.theory-box {
+    background-color: aqua;
+}

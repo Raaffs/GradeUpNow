@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"github.com/Suy56/GradeUpNow/internal/models"
 	"github.com/gorilla/mux"
+    //"encoding/json"
 	//"strconv"
 )
 func(app *application)root_hander(w http.ResponseWriter, r*http.Request){
@@ -102,6 +103,7 @@ func (app *application)home(w http.ResponseWriter, r *http.Request){
 	files := []string{
 		"./ui/html/home.html",
 	}
+    //To access add(a,b int) func. Refer to comments in helpers.go
     tmpl, err := template.New("home.html").Funcs(funcMap).ParseFiles(files...)
     if err != nil {
         app.notFound(w)
@@ -125,6 +127,7 @@ func (app *application) sign_up(w http.ResponseWriter, r *http.Request) {
             http.Redirect(w, r, "/signup?error="+errorMessage, http.StatusSeeOther)
             return
         }
+        
 
         // Check if username already exists
         usernameExists, err := app.user.Check_if_exist(username, "")
@@ -220,9 +223,8 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
     if r.URL.Path=="/home/profile"{
         fmt.Println("hello")
         fmt.Print(models.G_CurrentUserSession)
-       usr,err :=app.user.Get(models.G_CurrentUserSession)
-       
-       
+        usr,err :=app.user.Get(models.G_CurrentUserSession)
+        data.Individual_user_data=usr
         if err!=nil{
         app.notFound(w)
         app.errorLog.Println(err)
@@ -270,40 +272,20 @@ func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
 
 }
 
-func (app *application)q_type_handler(w http.ResponseWriter,r *http.Request){
-	vars:=mux.Vars(r)
-	subject:=vars["subject"]
-	q_type:=vars["type"]
-	if subject!="java" && subject!="fse" && subject!="dsa" &&subject!="dbms"{
-		fmt.Fprint(w,"Subject not available")
-		return
-	}
-	switch q_type{
-	case "mcq":
-        total_scr,err:=app.user.Get(models.G_CurrentUserSession)
-        if err!=nil{
-            app.serverError(w,err)
-            app.errorLog.Fatal(err)
-        }
-		crnt_scr:=10
-        crnt_scr+=total_scr.DBMS_score
-        err=app.user.Update_score("dbms",crnt_scr)
-        if err!=nil{
-            app.serverError(w,err)
-            app.errorLog.Println(err)
-        }
-        fmt.Print("Testing after calling update score")
-	case "theory":
-		theory,err:=app.user.Get_Theory(subject)
-		if err!=nil{
-
-			app.serverError(w,err)
-			return
-		}
-		for _,question:=range theory{
-			fmt.Fprintf(w,"%v",question)
-		}
-	}
-	
+func (app *application)select_type(w http.ResponseWriter,r *http.Request){
+    vars:=mux.Vars(r)
+    subject:=vars["subject"]
+    tmpl,err:=template.ParseFiles("./ui/html/display.html")
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print(err)
+        return
+    }
+    //to redirect to /home/{subject}/{type}
+    data := struct {
+        Subject string
+    }{
+        Subject: subject,
+    }
+    tmpl.ExecuteTemplate(w,"display.html",data)
 }
-

@@ -8,8 +8,7 @@ import (
 // This method returns a servemux containing our application routes.
 func (app *application) routes() *mux.Router {
     mux := mux.NewRouter()
-    //tbh I don't know what this exactly does but without this
-    //css doesn't work
+    //access files in /static/ to render css, javascript and images. 
     fileServer := http.FileServer(http.Dir("./ui/static/"))
     mux.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileServer))
     
@@ -19,7 +18,8 @@ func (app *application) routes() *mux.Router {
     mux.HandleFunc("/home/leaderboard",app.leader_board)
     mux.HandleFunc("/home/profile",app.profile_handler)
 	mux.HandleFunc("/home/{username}/profile", app.profile_handler)
-    mux.HandleFunc("/home/{subject}/{type}", app.q_type_handler)
+    mux.HandleFunc("/home/{subject}", app.select_type)
+    mux.HandleFunc("/home/{subject}/mcq",app.mcq_handler)
     mux.HandleFunc("/",app.root_hander)
     return mux
 }

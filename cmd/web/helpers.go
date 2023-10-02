@@ -17,6 +17,10 @@ func (app *application) clientError(w http.ResponseWriter, status int) {
 func (app *application) notFound(w http.ResponseWriter) {
 	app.clientError(w, http.StatusNotFound)
 }
+
+//models.leader_board return a slice of user struct and we want to loop over that slice to show all the users
+//however there as indexing starts from 0, value of 1 needs to be added in each iteration. As there is no direct way
+//to add values in html, this function is needed.  
 func add(a,b int)int{
 	return a+b
 }

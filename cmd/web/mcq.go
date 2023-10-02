@@ -1,18 +1,48 @@
 package main
-import (
 
+import (
+	"html/template"
+	"net/http"
+	"strconv"
+
+	"github.com/Suy56/GradeUpNow/internal/models"
+	"github.com/gorilla/mux"
 )
-func mcq_Ques_keys(q_num int)(string,int){
-    ques:=map[int]string{
-        1: "What is the function of a pointer?\n1.Store data\n2.Store memory address of another variable\n3.Reference to variable\n4.A special function.",
-        2: "Which of the following is a non linear data structure?\n1.Tree\n2.Array\n3.Linked list\n4.Queue",
+var currentQuestionIndex=1
+var serverVariable=0
+func (app *application)mcq_handler(w http.ResponseWriter,r *http.Request){
+    vars:=mux.Vars(r)
+    subject:=vars["subject"]
+    _,err:=app.user.Get(models.G_CurrentUserSession)
+    //TODO:
+    //scr+=10 for every correct ans
+    //update user databse using app.user.Update_score(subject,scr)
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print("Error in mcq_hander while request user data",err)
     }
-    keys:=map[int]int{
-        1:2,
-        2:1,
+    question,err:=app.user.Get_Mcq(subject)
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print("Error in mcq_handler while requesting mcq data",err)
     }
-    return ques[q_num],keys[q_num]
+    if r.Method==http.MethodPost{
+        userChoice,err:=strconv.Atoi(r.FormValue("choice"))
+        if err!=nil{
+            app.serverError(w,err)
+            app.errorLog.Print("error in mcq_handler",err)
+        }
+        question[currentQuestionIndex].UserChoice=userChoice
+    }
+    tmpl,err:=template.ParseFiles("./ui/html/mcq.html")
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Print("Error in mcq_hanlder while paring html",err)
+    }
+    err=tmpl.Execute(w,question[currentQuestionIndex])
+    if err!=nil{
+        app.serverError(w,err)
+        app.errorLog.Fatal(err)
+    }
 }
-func Evaluate(opt int, corr_ans int) bool{
-    return opt==corr_ans
-}
+
