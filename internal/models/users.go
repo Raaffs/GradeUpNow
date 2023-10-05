@@ -53,8 +53,7 @@ func (user *Model)Check_if_exist(username string,email_id string)(bool,error){
 }
 
 func (user *Model)Get(username string)(*User, error){
-	fmt.Println("testing")
-
+	
 	user_query:=&User{}
 	stmt:=`SELECT username,email_id,total_score,mcq_score,theory_score,Java_score,DBMS_score,DSA_score,FSE_score,password
 	FROM User_profile
@@ -70,7 +69,6 @@ func (user *Model)Get(username string)(*User, error){
 			return nil,err
 		}
 	}
-	fmt.Println("testing after err")
 
 	return user_query,nil
 }
@@ -106,7 +104,6 @@ func(user *Model)Leader_board()([] *User,error){
 }
 
 func (user *Model) Update_score(subject string, score int) error {
-	fmt.Println("in update score")
 
 	tot_scr,err:=user.Get(G_CurrentUserSession)
 	if err!=nil{

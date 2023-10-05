@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theory Questions</title>
+    <link rel="stylesheet" href="/static/css/theory.css">
+</head>
+<body>
+    <div class="question-container">
+        <h2>{{.TQ_num}}. {{.TQ_question}}</h2>
+        <form method="post" action="">
+            <input type="hidden" name="question_number" value="{{.TQ_num}}">
+            <label for="user-answer">Your Answer:</label>
+            <input type="text" id="user-answer" name="answer" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    
+    <!-- Separate answer box -->
+    <div class="answer-box">
+        <!-- Content for the answer box here -->
+    </div>
+
+    {{if .HasNextQuestion}}
+    <div class="navigation">
+        <!-- Link to move to the next question -->
+        <a href="/home/{{.TQ_type}}/theory?q={{.NextQuestionIndex}}">Next Question</a>
+    </div>
+    {{else}}
+    <div class="navigation">
+        <!-- Display a message when all questions have been answered -->
+        All questions have been answered.
+    </div>
+    {{end}}
+</body>
+</html>

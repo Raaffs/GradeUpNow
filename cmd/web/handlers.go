@@ -197,13 +197,11 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
     data:=&template_data{}
     if username!=""{
         usr,err:=app.user.Get(username)
-        fmt.Print("printing after get(usernmae)")
-        data.Individual_user_data=usr
-
         if err!=nil{
-            app.notFound(w)
-            app.errorLog.Fatal(err)
+            fmt.Fprint(w,"Please login")
+            http.Redirect(w,r,"/login",404)
         }
+        data.Individual_user_data=usr
         tmpl,err:=template.ParseFiles("./ui/html/profile.html")
         if err!=nil{            
 
@@ -221,7 +219,6 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
     
     
     if r.URL.Path=="/home/profile"{
-        fmt.Println("hello")
         fmt.Print(models.G_CurrentUserSession)
         usr,err :=app.user.Get(models.G_CurrentUserSession)
         data.Individual_user_data=usr

@@ -26,11 +26,11 @@ func (theory *Model)Get_Theory(q_sub string)([]*Theory,error){
 	for rows.Next(){
 		t:=&Theory{}
 		err=rows.Scan(
-			t.TQ_id,
-			t.TQ_num,
-			t.TQ_type,
-			t.TQ_question,
-			t.TQ_keywords,
+			&t.TQ_id,
+			&t.TQ_num,
+			&t.TQ_type,
+			&t.TQ_question,
+			&t.TQ_keywords,
 		)
 		if err!=nil{
 			return nil,err

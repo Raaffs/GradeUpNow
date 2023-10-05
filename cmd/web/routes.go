@@ -12,14 +12,16 @@ func (app *application) routes() *mux.Router {
     fileServer := http.FileServer(http.Dir("./ui/static/"))
     mux.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileServer))
     
-    mux.HandleFunc("/login", app.login) 
-    mux.HandleFunc("/home", app.home)
+    mux.HandleFunc("/",app.root_hander)
+    mux.HandleFunc("/login", app.login)
     mux.HandleFunc("/signup", app.sign_up)
+    mux.HandleFunc("/home", app.home)
     mux.HandleFunc("/home/leaderboard",app.leader_board)
     mux.HandleFunc("/home/profile",app.profile_handler)
 	mux.HandleFunc("/home/{username}/profile", app.profile_handler)
     mux.HandleFunc("/home/{subject}", app.select_type)
     mux.HandleFunc("/home/{subject}/mcq",app.mcq_handler)
-    mux.HandleFunc("/",app.root_hander)
+    mux.HandleFunc("/home/{subject}/theory",app.theory_handler)
+    
     return mux
 }
