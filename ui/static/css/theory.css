@@ -1,17 +1,29 @@
 body {
-    background-color: rgb(26, 25, 25);
+    background-color: black;
     font-family: 'Mulish', sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
     min-height: 100vh;
     margin: 0;
     padding: 0;
 }
 
-.question-container {
-    background-color: rgb(0, 140, 255);
+.question-box {
+    background-color: aqua;
+    border: 1px solid white;
+    padding: 20px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+.answer-box {
+    background-color: black;
     border: 1px solid white;
     padding: 20px;
     text-align: center;
@@ -22,20 +34,38 @@ body {
     width: 50%;
 }
 
+/* Style the label and input */
 label {
     color: white;
+    display: block; /* Display the label as a block element */
+    margin-bottom: 10px; /* Add some margin below the label */
 }
 
 input[type="text"] {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 8px;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 10px; /* Add some margin below the input */
 }
 
+/* Style the score box */
+.score-box {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px; /* Add margin to separate it from other boxes */
+}
+
+/* Style the submit button and navigation link */
 button[type="submit"], a {
     background-color: green;
     color: white;
@@ -56,3 +86,5 @@ button[type="submit"]:hover, a:hover {
 .navigation {
     text-align: center;
 }
+
+/* Add any additional styles you need here */

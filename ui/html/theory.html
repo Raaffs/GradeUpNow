@@ -5,31 +5,40 @@
     <link rel="stylesheet" href="/static/css/theory.css">
 </head>
 <body>
-    <div class="question-container">
-        <h2>{{.TQ_num}}. {{.TQ_question}}</h2>
-        <form method="post" action="">
-            <input type="hidden" name="question_number" value="{{.TQ_num}}">
-            <label for="user-answer">Your Answer:</label>
-            <input type="text" id="user-answer" name="answer" required>
-            <button type="submit">Submit</button>
-        </form>
+    <!-- Question Box -->
+    <div class="question-box">
+        <div class="question-container">
+            <h2>{{.TQ_num}}. {{.TQ_question}}</h2>
+        </div>
     </div>
     
-    <!-- Separate answer box -->
+    <!-- Answer Box -->
     <div class="answer-box">
-        <!-- Content for the answer box here -->
+        <div class="answer-container">
+            <form method="post" action="">
+                <input type="hidden" name="question_number" value="{{.TQ_num}}">
+                <label for="user-answer">Your Answer:</label>
+                <input type="text" id="user-answer" name="answer" required>
+                <!-- Submit Button inside the form -->
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
     </div>
 
-    {{if .HasNextQuestion}}
-    <div class="navigation">
+    <!-- Score Box -->
+    <div class="score-box">
+        <p>Score: {{.Score}}</p> <!-- Display the score here -->
+    </div>
+
+    <!-- Navigation Box -->
+    <div class="navigation-box">
+        {{if .HasNextQuestion}}
         <!-- Link to move to the next question -->
-        <a href="/home/{{.TQ_type}}/theory?q={{.NextQuestionIndex}}">Next Question</a>
-    </div>
-    {{else}}
-    <div class="navigation">
+        <a href="/home/{{.TQ_type}}/theory?q={{.NextQuestionIndex}}" class="navigation-link">Next</a>
+        {{else}}
         <!-- Display a message when all questions have been answered -->
-        All questions have been answered.
+        <span class="navigation-message"><a href="/home">All questions have been answered. Back to home page</a></span>
+        {{end}}
     </div>
-    {{end}}
 </body>
 </html>

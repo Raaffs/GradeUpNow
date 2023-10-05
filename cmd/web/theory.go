@@ -1,8 +1,11 @@
 package main
+
 import (
-    "strings"
+	"fmt"
 	"regexp"
-    "github.com/texttheater/golang-levenshtein/levenshtein"
+	"strings"
+
+	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
 
@@ -39,17 +42,18 @@ func Format_ans(ans string) string {
 // Uses levenshtein distance algorithm to match keywords that are similar, in cases where the user uses a different form of the same
 // word or makes some spelling error while entering the answer.
 
-func Evaluate_ans(ans string, key string) float64 {
+func Evaluate_ans(ans string, key string)(int,[]string) {
     var count int
-    totalKeys := len(key)
     key_arr:=strings.Split(key,",")
-    for _, word := range strings.Split(ans,",") {
+    total_keys:=len(key_arr)
+    for _, word := range strings.Fields(ans) {
 
         for i, correctKeyword := range key_arr {
             distance := levenshtein.DistanceForStrings([]rune(word), []rune(correctKeyword), levenshtein.DefaultOptions)
             threshold := 0.5 * float64(len(correctKeyword))
             if float64(distance) <= threshold {
                 count++
+                fmt.Println("counter: ",count)
                 // Removes matched keyword from the list
                 key_arr = append(key_arr[:i], key_arr[i+1:]...)
                 break
@@ -60,20 +64,21 @@ func Evaluate_ans(ans string, key string) float64 {
     }
 
     // Calculate the percentage of matched words
-    percent := (float64(count) / float64(totalKeys)) * 100
+    percent := (float64(count) / float64(total_keys)) * 100
+    fmt.Println("Percentage: ",percent)
 	if percent>75{
-		return 10
+		return 10,key_arr
 	}else if percent>70{
-		return 9
+		return 9,key_arr
 	}else if percent>60{
-		return 8
-	}else if percent>50{
-		return 7
+		return 8,key_arr
+    }else if percent>50{
+		return 7,key_arr
 	}else if percent>40{
-		return 6
+		return 6,key_arr
 	}else if percent>25{
-		return 5
+		return 5,key_arr
 	}else{
-		return 2
+		return 2,key_arr
 	}
 }

@@ -11,9 +11,11 @@ import (
 )
 
 func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
+    tmpl_score := 0 // To print score in html file, as the score variable cannot be accessed out of if-else block
     vars := mux.Vars(r)
     subject := vars["subject"]
     _, err := app.user.Get(models.G_CurrentUserSession)
+
     if err != nil {
         app.notFound(w)
         app.errorLog.Print(err)
@@ -25,7 +27,7 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
         app.serverError(w, err)
         return
     }
-
+    
     // Get the current question index from the query parameter, or initialize it to 0
     currentQuestionIndex, err := strconv.Atoi(r.URL.Query().Get("q"))
     if err != nil {
@@ -43,10 +45,12 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
 
         // Get the user's answer from the form data
         userAnswer := r.Form.Get("answer")
-        frmt_ans:=Format_ans(userAnswer)
-        fmt.Println(userAnswer)
+        frmt_ans := Format_ans(userAnswer)
+        score, key_arr := Evaluate_ans(frmt_ans, questions[currentQuestionIndex].TQ_keywords)
+        tmpl_score=score
+        fmt.Print(score)
+        fmt.Println(key_arr)
 
-        fmt.Print(frmt_ans)
         // Process the user's answer as needed
         // For example, you can compare it to the correct answer and update the score.
     }
@@ -63,19 +67,21 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
         // Check if there's a next question
         hasNextQuestion := currentQuestionIndex+1 < len(questions)
 
-        // Pass the current question data and whether there's a next question to the template
+        // Pass the current question data, score, and whether there's a next question to the template
         err = tmpl.Execute(w, struct {
             TQ_num           int
             TQ_question      string
             TQ_type          string
             HasNextQuestion  bool
             NextQuestionIndex int
+            Score             int // Pass the score to the template
         }{
             TQ_num:           questions[currentQuestionIndex].TQ_num,
             TQ_question:      questions[currentQuestionIndex].TQ_question,
             TQ_type:          questions[currentQuestionIndex].TQ_type,
             HasNextQuestion:  hasNextQuestion,
             NextQuestionIndex: currentQuestionIndex + 1,
+            Score:            tmpl_score, // Include the score
         })
         if err != nil {
             app.serverError(w, err)
