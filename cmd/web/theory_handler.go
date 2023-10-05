@@ -12,6 +12,7 @@ import (
 
 func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
     tmpl_score := 0 // To print score in html file, as the score variable cannot be accessed out of if-else block
+  //  total_score:=0 //To update score in the database
     vars := mux.Vars(r)
     subject := vars["subject"]
     _, err := app.user.Get(models.G_CurrentUserSession)

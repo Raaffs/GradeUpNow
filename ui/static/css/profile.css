@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: rgba(27, 26, 26, 0.973);
+    background-color: black;
     background-size: 200% 1080px;
     font-family: 'Mulish', sans-serif;
     display: flex;
@@ -17,15 +17,14 @@ body {
 }
 
 .navbar {
-    background-color: rgba(20, 23, 22, 0.98);
+    background-color: rgb(26, 25, 25);
     padding: 10px 0;
     text-align: center;
-    width: 100%;
+    width: 100%; /* Make the navbar full-width */
     position: fixed;
     top: 0;
     left: 0;
 }
-
 .navbar-container {
     display: flex;
     justify-content: space-between;
@@ -34,12 +33,11 @@ body {
     margin: 0 auto;
     padding: 0 20px;
 }
-
 .navbar ul {
     list-style-type: none;
     display: flex; /* Display navigation items horizontally */
     justify-content: center; /* Center the navigation items horizontally */
-    align-items: center; /* Center vertically within the navbar */
+    align-items: center;
 }
 
 .navbar ul li {
@@ -50,22 +48,27 @@ body {
     text-decoration: none;
     color: white;
     font-size: 18px;
-}
 
+}
+.nav-menu li {
+    font-size: 18px;
+}
 .nav-menu {
     list-style: none;
     display: flex;
     gap: 20px;
 }
 
-.nav-menu li {
-    font-size: 18px;
-}
-
 .nav-menu a {
     text-decoration: none;
     color: #ffffff;
     transition: color 0.3s;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline;
 }
 
 .nav-menu a:hover {
@@ -75,8 +78,8 @@ body {
 .container {
     margin-top: 70px; /* Add top margin to create space below the fixed navbar */
     display: flex;
-    background-color: rgba(20, 23, 22, 0.98);
-    border: 3px solid rgba(20, 23, 22);
+    background-color: black;
+    border: 3px solid black;
     border-radius: 8px;
     width: 80%;
     padding: 20px;
