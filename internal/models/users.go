@@ -105,61 +105,66 @@ func(user *Model)Leader_board()([] *User,error){
 
 func (user *Model) Update_score(subject string, score int) error {
 
-	tot_scr,err:=user.Get(G_CurrentUserSession)
+	current_score,err:=user.Get(G_CurrentUserSession)
 	if err!=nil{
+		if errors.Is(err,ErrNoRecord){
+			return ErrNoRecord
+		}
 		return err
 	}
+	
 
-	usr_scr:=&User{}
     switch subject {
     case "java":
-        usr_scr.Java_score = score+tot_scr.Java_score
+		
+		current_score.Java_score+=score
+		
 		stmt := `UPDATE User_profile 
 		SET Java_score=? 
 		WHERE username=?`
-    	_, err := user.DB.Exec(stmt, usr_scr.Java_score,G_CurrentUserSession)
+    	_, err = user.DB.Exec(stmt,current_score.Java_score,G_CurrentUserSession)
    		if err != nil {
        	 	return err
     	}
     case "dbms":
-        usr_scr.DBMS_score = score+tot_scr.DBMS_score
+		current_score.DBMS_score+=score
 		stmt := `UPDATE User_profile 
 		SET DBMS_score=? 
 		WHERE username=?`
-    	_, err := user.DB.Exec(stmt, usr_scr.DBMS_score,G_CurrentUserSession)
+    	_, err := user.DB.Exec(stmt, current_score.DBMS_score,G_CurrentUserSession)
 		fmt.Println("printling score after updating score", score)
 
    		if err != nil {
        	 	return err
     	}
     case "DSA_score":
-		usr_scr.DBMS_score = score
+		current_score.DSA_score+=score
 		stmt := `UPDATE User_profile 
 		SET DSA_score=? 
 		WHERE username=?`
-    	_, err := user.DB.Exec(stmt, usr_scr.DSA_score,G_CurrentUserSession)
+    	_, err := user.DB.Exec(stmt, current_score.DSA_score,G_CurrentUserSession)
    		if err != nil {
        	 	return err
     	}
     case "FSE_score":
-		usr_scr.DBMS_score = score
+		current_score.FSE_score+=score
 		stmt := `UPDATE User_profile 
 		SET FSE_score=? 
 		WHERE username=?`
-    	_, err := user.DB.Exec(stmt, usr_scr.FSE_score,G_CurrentUserSession)
+    	_, err := user.DB.Exec(stmt, current_score.FSE_score,G_CurrentUserSession)
    		if err != nil {
        	 	return err
     	}
     default:
         return errors.New("Invalid subject")
     }
-	total:=usr_scr.DBMS_score+usr_scr.Java_score
+	current_score.Total_score=current_score.Java_score+current_score.DBMS_score+current_score.FSE_score+current_score.DSA_score
 	stmt:=`UPDATE User_profile
 	SET total_score=?
 	WHERE username=?`
-	_,err=user.DB.Exec(stmt,total,G_CurrentUserSession)
+	_,err=user.DB.Exec(stmt,current_score.Total_score,G_CurrentUserSession)
 	if err!=nil{
-		fmt.Println("total score:" ,total)
+		fmt.Println("total score:" ,current_score.Total_score,"dbms score:",current_score.DBMS_score)
 		return err
 	}
 	return nil

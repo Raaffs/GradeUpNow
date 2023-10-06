@@ -27,14 +27,15 @@
             <h2>{{.TQ_num}}. {{.TQ_question}}</h2>
         </div>
     </div>
-    
+
     <!-- Answer Box -->
     <div class="answer-box">
         <div class="answer-container">
             <form method="post" action="">
                 <input type="hidden" name="question_number" value="{{.TQ_num}}">
                 <label for="user-answer">Your Answer:</label>
-                <input type="text" id="user-answer" name="answer" required>
+                <!-- Use CSS to make the text wrap -->
+                <input style="height: 200px; font-size: 14pt; word-wrap: break-word; white-space: pre-wrap;" type="text" id="user-answer" name="answer" required>
                 <!-- Submit Button inside the form -->
                 <button type="submit" class="submit-button">Submit</button>
             </form>

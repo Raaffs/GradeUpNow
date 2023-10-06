@@ -12,7 +12,7 @@ import (
 
 func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
     tmpl_score := 0 // To print score in html file, as the score variable cannot be accessed out of if-else block
-  //  total_score:=0 //To update score in the database
+    total_score:=0 //To update score in the database
     vars := mux.Vars(r)
     subject := vars["subject"]
     _, err := app.user.Get(models.G_CurrentUserSession)
@@ -49,6 +49,7 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
         frmt_ans := Format_ans(userAnswer)
         score, key_arr := Evaluate_ans(frmt_ans, questions[currentQuestionIndex].TQ_keywords)
         tmpl_score=score
+        total_score+=score
         fmt.Print(score)
         fmt.Println(key_arr)
 
@@ -88,6 +89,7 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
             app.serverError(w, err)
             return
         }
+        app.user.Update_score(subject,total_score)
     } else {
         // Display a message when all questions have been answered
         fmt.Fprint(w, "All questions have been answered.")

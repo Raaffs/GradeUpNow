@@ -199,7 +199,7 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
         usr,err:=app.user.Get(username)
         if err!=nil{
             fmt.Fprint(w,"Please login")
-            http.Redirect(w,r,"/login",404)
+            http.Redirect(w,r,"/login",http.StatusSeeOther)
         }
         data.Individual_user_data=usr
         tmpl,err:=template.ParseFiles("./ui/html/profile.html")
@@ -214,7 +214,6 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
             app.serverError(w,err)
             app.errorLog.Fatal(err)
         }
-        fmt.Print(usr.DBMS_score)
     }
     
     
@@ -232,9 +231,6 @@ func (app *application)profile_handler(w http.ResponseWriter, r *http.Request){
            app.errorLog.Print(err)
        }
        err=tmpl.ExecuteTemplate(w,"profile.html",data)
-       fmt.Print(usr.DBMS_score)
-
-       fmt.Print(usr.Total_score)
     }
 
 }
