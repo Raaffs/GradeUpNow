@@ -137,7 +137,7 @@ func (user *Model) Update_score(subject string, score int) error {
    		if err != nil {
        	 	return err
     	}
-    case "DSA_score":
+    case "dsa":
 		current_score.DSA_score+=score
 		stmt := `UPDATE User_profile 
 		SET DSA_score=? 
@@ -146,7 +146,7 @@ func (user *Model) Update_score(subject string, score int) error {
    		if err != nil {
        	 	return err
     	}
-    case "FSE_score":
+    case "fse":
 		current_score.FSE_score+=score
 		stmt := `UPDATE User_profile 
 		SET FSE_score=? 
