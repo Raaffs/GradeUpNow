@@ -5,48 +5,69 @@
     <link rel="stylesheet" href="/static/css/mcq.css">
 </head>
 <body>
-    <form method="post" action="/next/{{.MQ_type}}/mcq" id="mcq-form">
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navlogo">
+                    <!-- <div class="logo"></div> -->
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/home/profile">Profile</a></li>
+                    <li><a href="/home/leaderboard">Leaderboard</a></li>
+                    <li><a href="/home/about">About</a></li>
+                    <li><a href="/login">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <form method="post" action="/home/{{.MQ_type}}/mcq?q={{.NextQuestionIndex}}" id="mcq-form">
         <div class="question-container" id="question-container">
-            <h2 id="question-num">{{.MQ_num}}. {{.MQ_question}}</h2>
+            <h2 id="question-num">{{.MQ_num}}. <pre>{{.MQ_question}}</pre></h2>
         </div>
 
         <ul class="options-list">
             {{range $index, $option := .Options}}
-            <li class="option">
+            <li class="option" onclick="handleOptionClick(parseInt('{{ $index }}'))">
                 <input type="radio" id="choice{{$index}}" name="choice" value="{{$index}}" {{if eq $.UserChoice $index}}checked{{end}}>
                 <label for="choice{{$index}}">{{$option}}</label>
             </li>
             {{end}}
         </ul>
         <input type="hidden" id="correct-answer" name="correct" value="{{.MQ_ans}}">
-        <button class="next-button" type="submit" name="next">Next</button>
+        <input type="hidden" id="selected-option" name="selected" value="{{.UserChoice}}">
+        <input type="hidden" id="correct-option" name="correct-option" value="{{.MQ_ans}}">
+        <div class="next-button-container">
+            <button type="submit" class="next-button">Next</button>
+        </div>
     </form>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     var options = document.querySelectorAll('.option');
+    var correctAnswerIndex = parseInt(document.getElementById("correct-answer").value);
 
     options.forEach(function(option, index) {
         option.addEventListener("click", function() {
-            handleOptionClick(option, index);
+            handleOptionClick(option, index, correctAnswerIndex);
         });
     });
 
-    function handleOptionClick(option, index) {
+    function handleOptionClick(option, index, correctAnswerIndex) {
         var radioInput = option.querySelector('input[type="radio"]');
 
         if (radioInput.checked) {
             return;
         }
 
-        if (parseInt(index) === parseInt(document.getElementById("correct-answer").value)) {
+        if (index === correctAnswerIndex) {
             option.classList.remove('wrong');
             option.classList.add('correct');
         } else {
             option.classList.remove('correct');
             option.classList.add('wrong');
 
-            options.forEach(function(opt) {
-                if (parseInt(opt.querySelector('input[type="radio"]').value) === parseInt(document.getElementById("correct-answer").value)) {
+            options.forEach(function(opt, optIndex) {
+                if (optIndex === correctAnswerIndex) {
                     opt.classList.remove('wrong');
                     opt.classList.add('correct');
                 }
@@ -68,7 +89,7 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                isCorrect: parseInt(index) === parseInt(document.getElementById("correct-answer").value),
+                isCorrect: index === correctAnswerIndex,
             }),
         })
         .then((response) => response.json())
@@ -81,6 +102,6 @@
     }
 });
 
-    </script>
+</script>
 </body>
 </html>

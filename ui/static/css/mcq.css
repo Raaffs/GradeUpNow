@@ -1,15 +1,20 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
-    background-color: rgba(27, 26, 26, 0.973);
+    background-color: rgb(0, 0, 0);
     font-family: 'Mulish', sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
     min-height: 100vh;
     margin: 0;
     padding: 0;
 }
-
 .question-container {
     background-color: black;
     border: 1px solid white;
@@ -57,3 +62,87 @@ body {
 .option input[type="radio"] {
     display: none;
 }
+/* ... Your previous CSS ... */
+
+.navbar {
+    background-color: rgb(26, 25, 25);
+    padding: 10px 0;
+    text-align: center;
+    width: 100%; /* Make the navbar full-width */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.navbar ul {
+    list-style-type: none;
+    display: flex; /* Display navigation items horizontally */
+    justify-content: center; /* Center the navigation items horizontally */
+    align-items: center;
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.nav-menu li {
+    font-size: 18px;
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline;
+}
+
+.nav-menu a:hover {
+    color: #ff6600;
+}
+/* ... Previous CSS code ... */
+
+/* Style the "Next" button */
+.next-button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    margin-top: 20px; /* Add margin to center the button vertically */
+}
+
+.next-button {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.next-button:hover {
+    background-color: #00cc00; /* Change the background color on hover */
+}
+
+/* ... Previous CSS code ... */

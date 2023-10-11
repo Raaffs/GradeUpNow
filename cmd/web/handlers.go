@@ -253,6 +253,8 @@ func (app *application)leader_board(w http.ResponseWriter, r *http.Request){
 	files := []string{
 		"./ui/html/leaderboard.html",
 	}
+    
+    //To access add(a,b int) func. Refer to comments in helpers.go
     tmpl, err := template.New("leaderboard.html").Funcs(funcMap).ParseFiles(files...)
     if err != nil {
         app.notFound(w)
@@ -281,4 +283,5 @@ func (app *application)select_type(w http.ResponseWriter,r *http.Request){
         Subject: subject,
     }
     tmpl.ExecuteTemplate(w,"display.html",data)
+    
 }

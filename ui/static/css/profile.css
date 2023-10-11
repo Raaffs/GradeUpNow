@@ -7,7 +7,7 @@
 
 body {
     background-color: black;
-    background-size: 200% 1080px;
+    background-size: 100% 1080px;
     font-family: 'Mulish', sans-serif;
     display: flex;
     flex-direction: column;

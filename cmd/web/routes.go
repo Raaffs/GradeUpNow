@@ -22,6 +22,7 @@ func (app *application) routes() *mux.Router {
     mux.HandleFunc("/home/{subject}", app.select_type)
     mux.HandleFunc("/home/{subject}/mcq",app.mcq_handler)
     mux.HandleFunc("/home/{subject}/theory",app.theory_handler)
+    mux.HandleFunc("/check-answer",app.Update_mcq_score)
     
     return mux
 }
