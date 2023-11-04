@@ -23,13 +23,12 @@ ENTER ALL WORDS IN LOWER CASE, SEPARATE THEM WITH ',' AND LEAVE NO WHITE SPACE I
 import (
 	"flag"
 	"database/sql"
-	//"html/template"
 	"log"
 	"net/http"
 	"os"
+	
 	_"github.com/go-sql-driver/mysql"
 	"github.com/Suy56/GradeUpNow/internal/models"
-	// "github.com/Suy56/GradeUpNow/internal/models"
 )
 
 

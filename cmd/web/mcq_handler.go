@@ -45,7 +45,7 @@ func (app *application) mcq_handler(w http.ResponseWriter, r *http.Request) {
 		}
 		question[currentQuestionIndex].UserChoice = userChoice
 	}
-
+	hasNextQuestion := currentQuestionIndex+1 < len(question)
 	if currentQuestionIndex >= 0 && currentQuestionIndex < len(question) {
 		tmpl, err := template.ParseFiles("./ui/html/mcq.html")
 		if err != nil {
@@ -53,6 +53,7 @@ func (app *application) mcq_handler(w http.ResponseWriter, r *http.Request) {
 			app.errorLog.Print("Error in mcq_hanlder while paring html", err)
 		}
 		fmt.Println(score)
+		
 		err = tmpl.Execute(w, struct {
 			MQ_num            int
 			MQ_question       string
@@ -61,6 +62,7 @@ func (app *application) mcq_handler(w http.ResponseWriter, r *http.Request) {
 			Options           []string
 			NextQuestionIndex int // Include the next question index
 			UserChoice        int
+			HasNextQuestion bool
 		}{
 			MQ_num:            question[currentQuestionIndex].MQ_num,
 			MQ_question:       question[currentQuestionIndex].MQ_question,
@@ -69,7 +71,9 @@ func (app *application) mcq_handler(w http.ResponseWriter, r *http.Request) {
 			Options:           question[currentQuestionIndex].Options,
 			NextQuestionIndex: currentQuestionIndex + 1, // Pass the next question index
 			UserChoice:        question[currentQuestionIndex].UserChoice,
+			HasNextQuestion: hasNextQuestion,
 		})
+
 		if err != nil {
 			app.serverError(w, err)
 			app.errorLog.Fatal(err)
@@ -79,12 +83,13 @@ func (app *application) mcq_handler(w http.ResponseWriter, r *http.Request) {
 		// Display a message when all questions have been answered
 		fmt.Fprint(w, "All questions have been answered.")
 	}
+	err=app.user.Update_score(subject,score)
+	if err!=nil{
+		app.serverError(w,err)
+		app.errorLog.Println("in mcq handler",err)
+	}
+
     fmt.Println("total score",total_score)
-	err=app.user.Update_score(subject,total_score)
-	  if err!=nil{
-	      app.serverError(w,err)
-	      app.errorLog.Println("in mcq handler",err)
-	  }
       fmt.Println("score",score)
 
 }

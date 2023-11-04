@@ -132,7 +132,6 @@ func (user *Model) Update_score(subject string, score int) error {
 		SET DBMS_score=? 
 		WHERE username=?`
     	_, err := user.DB.Exec(stmt, current_score.DBMS_score,G_CurrentUserSession)
-		fmt.Println("printling score after updating score", score)
 
    		if err != nil {
        	 	return err

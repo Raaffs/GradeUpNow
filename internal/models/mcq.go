@@ -1,25 +1,24 @@
 package models
 
 
-//Corresponds to the columns and their datatype in sql database except MQ_opt
+//Corresponds to the columns and their datatype in sql database
 type Mcq struct{
 	MQ_id int
 	MQ_num int
 	MQ_type string
 	MQ_question string
 	MQ_ans int
-	Option1     string // Separate columns for options
+	Option1     string 				// Separate columns for options
 	Option2     string
 	Option3     string
 	Option4     string
-	Options		[]string
-	UserChoice int
-	HasNextQuestion bool
+	Options		[]string			//Used to print all the options in database
+	UserChoice int					//Clientside variable that stores number of option selected by the user
+	HasNextQuestion bool			
 	NextQuestionIndex int
 }
 
 func (mcq *Model)Get_Mcq(q_sub string)([]*Mcq,error){
-	//ques:=&Mcq{}
 	stmt:=`SELECT MQ_num, MQ_question, Option1, Option2, Option3, Option4, MQ_ans, MQ_type
 	FROM Mcq
 	WHERE MQ_type=?

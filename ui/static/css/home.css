@@ -141,6 +141,7 @@ body {
 }
 
 .box {
+    margin-top: 20px;
     display: block;
     width: 40%;
     margin: 20px auto;
@@ -154,24 +155,24 @@ body {
 }
 
 .box.dbms {
-    background-color: rgb(22, 216, 216); /* Red color */
+    background-color: rgb(0, 0, 0); /* Red color */
 }
 
 .box.dsa {
-    background-color: rgb(22, 216, 216); /* Purple color */
+    background-color: rgb(0, 0, 0); /* Purple color */
 }
 
 .box.java {
-    background-color: rgb(22, 216, 216);  /* Green color */
+    background-color: rgb(0, 0, 0);  /* Green color */
 }
 
-a.box.fse {
-    background-color: argb(22, 216, 216) !important;
-    color: black;
+.box.fse {
+    background-color: rgb(255, 0, 0) !important;
+    color: white;
 }
 a.box.fse {
-    background-color: rgb(22, 216, 216) !important; /* Your desired background color */
-    color: black;
+    background-color: rgb(255, 0, 0) !important; /* Your desired background color */
+    color: white;
 }
 
 .box:hover {

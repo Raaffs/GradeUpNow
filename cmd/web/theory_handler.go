@@ -25,6 +25,7 @@ func (app *application) theory_handler(w http.ResponseWriter, r *http.Request) {
 
     questions, err := app.user.Get_Theory(subject)
     if err != nil {
+        fmt.Fprint(w,"please login")
         app.serverError(w, err)
         return
     }

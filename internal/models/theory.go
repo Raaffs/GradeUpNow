@@ -1,8 +1,5 @@
 package models
-import (
-	//"database/sql"
-	//"errors"
-)
+
 //Corresponds to the columns and their datatype in sql database
 type Theory struct{
 	TQ_id int

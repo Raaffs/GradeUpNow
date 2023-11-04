@@ -3,6 +3,20 @@
 <head>
     <title>MCQ Questions</title>
     <link rel="stylesheet" href="/static/css/mcq.css">
+    <style>
+            .back-to-home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-to-home-button:hover {
+            background-color: darkgreen;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -38,7 +52,11 @@
         <input type="hidden" id="selected-option" name="selected" value="{{.UserChoice}}">
         <input type="hidden" id="correct-option" name="correct-option" value="{{.MQ_ans}}">
         <div class="next-button-container">
+            {{if .HasNextQuestion}}
             <button type="submit" class="next-button">Next</button>
+            {{else}}
+            <a href="/home">Back to home</a>
+            {{end}}
         </div>
     </form>
     <script>
