@@ -72,7 +72,7 @@ func Evaluate_ans(ans string, key string)(int,[]string) {
 		return 9,key_arr
 	}else if percent>60{
 		return 8,key_arr
-    }else if percent>50{
+	}else if percent>50{
 		return 7,key_arr
 	}else if percent>40{
 		return 6,key_arr
