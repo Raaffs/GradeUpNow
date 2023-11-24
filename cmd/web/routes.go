@@ -18,7 +18,7 @@ func (app *application) routes() *mux.Router {
     mux.HandleFunc("/home", app.home)
     mux.HandleFunc("/home/leaderboard",app.leader_board)
     mux.HandleFunc("/home/profile",app.profile_handler)
-	mux.HandleFunc("/home/{username}/profile", app.profile_handler)
+    mux.HandleFunc("/home/{username}/profile", app.profile_handler)
     mux.HandleFunc("/home/{subject}", app.select_type)
     mux.HandleFunc("/home/{subject}/mcq",app.mcq_handler)
     mux.HandleFunc("/home/{subject}/theory",app.theory_handler)
