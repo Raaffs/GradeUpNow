@@ -20,7 +20,7 @@ GradeUpNow is an aptitude preparation portal designed to provide students with a
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/gradeupnow.git
+    git clone https://github.com/Suy56/GradeUpNow
     ```
 2. **Navigate to the project directory**:
     ```bash
