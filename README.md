@@ -26,7 +26,7 @@ GradeUpNow is an aptitude preparation portal designed to provide students with a
     ```bash
     cd gradeupnow
     ```
-3. **Install dependencies**:
+3. **Run**:
     ```bash
     go run ./api/web
     ```
