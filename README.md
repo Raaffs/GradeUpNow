@@ -28,14 +28,9 @@ GradeUpNow is an aptitude preparation portal designed to provide students with a
     ```
 3. **Install dependencies**:
     ```bash
-    npm install
+    go run ./api/web
     ```
-4. **Set up environment variables**:
-    - Create a `.env` file in the root directory and add the necessary environment variables (e.g., database connection string, API keys).
-5. **Start the development server**:
-    ```bash
-    npm start
-    ```
+
 
 ## Usage
 
